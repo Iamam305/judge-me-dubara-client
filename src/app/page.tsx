@@ -42,10 +42,15 @@ const Page = () => {
       method: "POST",
       data: bodyContent,
     };
-
-    axios.request(reqOptions).then((res) => {
-      get_data();
-    });
+    setLoading(true);
+    axios
+      .request(reqOptions)
+      .then((res) => {
+        get_data();
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const get_data = async () => {
@@ -53,16 +58,11 @@ const Page = () => {
       url: `/api/review?productId=${shop_id}&shopId=${product_id}`,
       method: "GET",
     };
-    setLoading(true);
-    axios
-      .request(reqOptions)
-      .then((res) => {
-        setreviews(res.data.reviews);
-        setAvgRating(res.data.rating[0].averageRating);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+
+    axios.request(reqOptions).then((res) => {
+      setreviews(res.data.reviews);
+      setAvgRating(res.data.rating[0].averageRating);
+    });
   };
   useEffect(() => {
     get_data();
