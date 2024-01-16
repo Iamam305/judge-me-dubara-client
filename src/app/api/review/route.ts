@@ -25,7 +25,7 @@ export const POST = async (req: NextRequest) => {
         userName: name, // String
         title, // String
         content, // String
-        rating,
+        rating:+rating,
         createdAt: Date.now(),
         status: "Public",
       });
