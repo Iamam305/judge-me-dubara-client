@@ -50,7 +50,7 @@ const Page = () => {
 
   const get_data = async () => {
     const reqOptions = {
-      url: `/api/review?productId=123456789&shopId=987654321`,
+      url: `/api/review?productId=${shop_id}&shopId=${product_id}`,
       method: "GET",
     };
     setLoading(true);
