@@ -15,6 +15,7 @@ type Inputs = {
 const Page = () => {
   const [reviews, setreviews] = useState<any>([]);
   const [loading, setLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [avgRating, setAvgRating] = useState(0);
   const searchParams = useSearchParams();
   const product_id = searchParams.get("productId");
@@ -46,7 +47,7 @@ const Page = () => {
     axios
       .request(reqOptions)
       .then((res) => {
-        get_data();
+        setIsSubmitted(true);
       })
       .finally(() => {
         setLoading(false);
@@ -66,7 +67,14 @@ const Page = () => {
   };
   useEffect(() => {
     get_data();
-  }, []);
+    if (isSubmitted) {
+      // Perform the desired action after form submission
+      console.log("Form submitted!");
+
+      // Reset the state if needed
+      setIsSubmitted(false);
+    }
+  }, [isSubmitted]);
 
   return (
     <div className="mx-auto px-4 md:px-6 max-w-2xl overflow-x-hidden">
