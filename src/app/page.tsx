@@ -26,6 +26,7 @@ const Page = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    reset
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const bodyContent = JSON.stringify({
@@ -52,17 +53,18 @@ const Page = () => {
       .finally(() => {
         setLoading(false);
       });
+      reset();
   };
 
   const get_data = async () => {
     const reqOptions = {
-      url: `/api/review?productId=${shop_id}&shopId=${product_id}`,
+      url: `/api/review?productId=${product_id}&shopId=${shop_id}`,
       method: "GET",
     };
 
-    axios.request(reqOptions).then((res) => {
+    await axios.request(reqOptions).then((res) => {
       setreviews(res.data.reviews);
-      setAvgRating(res.data.rating[0].averageRating);
+      setAvgRating(res.data?.rating[0].averageRating);
     });
   };
   useEffect(() => {
